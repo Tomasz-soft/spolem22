@@ -44,7 +44,7 @@ def pracownik_login(request):
                         p.attr_prac,\
                         p.klucz_prac, \
                         pl.db_id, \
-                        pl.db_name, \
+                        db.db_name, \
                         p.status, \
                         pl.status as plstatus \
                 from pracownicy p left outer join pracownicy_plac pl \
@@ -96,7 +96,7 @@ def pracownik_login(request):
                     p.attr_prac,\
                     p.klucz_prac, \
                     pl.db_id, \
-                    pl.db_name, \
+                    db.db_name, \
                     p.status, \
                     pl.status as plstatus \
             from pracownicy p left outer join pracownicy_plac pl \
@@ -119,7 +119,7 @@ def pracownik_login(request):
                     p.attr_prac,\
                     p.klucz_prac, \
                     pl.db_id, \
-                    pl.db_name, \
+                    db.db_name, \
                     p.status, \
                     pl.status as plstatus \
             from pracownicy p left outer join pracownicy_plac pl \
