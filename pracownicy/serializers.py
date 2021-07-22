@@ -27,4 +27,4 @@ class PracLoginSerializer(serializers.Serializer):
     db_id = serializers.IntegerField()
     status = serializers.IntegerField()
     plstatus = serializers.IntegerField()
-    #db_name = serializers.CharField()
+    db_name = serializers.CharField()

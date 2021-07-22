@@ -44,10 +44,12 @@ def pracownik_login(request):
                         p.attr_prac,\
                         p.klucz_prac, \
                         pl.db_id, \
+                        pl.db_name, \
                         p.status, \
                         pl.status as plstatus \
                 from pracownicy p left outer join pracownicy_plac pl \
                     on p.id_prac = pl.id_prac \
+                        inner join databases db on db.db_id = pl.db_id\
                 where (pl.status is null or pl.status =0) and p.status = 0 and p.klucz_prac = %s', [login])
             if len(prac_key) > 0:
                 for pr in prac_key:
@@ -59,6 +61,7 @@ def pracownik_login(request):
                         'attr_prac': pr.attr_prac,
                         'id_prac': pr.id_prac,
                         'db_id': pr.db_id,
+                        'db_name': pr.db_name,
                         'status': pr.status,
                         'plstatus': pr.plstatus
                     }
@@ -93,10 +96,12 @@ def pracownik_login(request):
                     p.attr_prac,\
                     p.klucz_prac, \
                     pl.db_id, \
+                    pl.db_name, \
                     p.status, \
                     pl.status as plstatus \
             from pracownicy p left outer join pracownicy_plac pl \
                 on p.id_prac = pl.id_prac \
+                    inner join databases db on db.db_id = pl.db_id \
             where (pl.status is null or pl.status =0) and p.status = 0 and p.ident_prac = %s', [login])
         if len(prac_login) == 0:
             exceptionError = {
@@ -114,11 +119,13 @@ def pracownik_login(request):
                     p.attr_prac,\
                     p.klucz_prac, \
                     pl.db_id, \
+                    pl.db_name, \
                     p.status, \
                     pl.status as plstatus \
             from pracownicy p left outer join pracownicy_plac pl \
                 on p.id_prac = pl.id_prac \
-            where (pl.status is null or pl.status =0) and p.status = 0 and p.haslo_prac = %s', [passwd])
+                    inner join databases db on db.db_id = pl.db_id \
+             where (pl.status is null or pl.status =0) and p.status = 0 and p.haslo_prac = %s', [passwd])
             if len(prac_passwd) > 0:
                 for pr in prac_passwd:
                     daneprac = {
@@ -129,6 +136,7 @@ def pracownik_login(request):
                         'attr_prac': pr.attr_prac,
                         'id_prac': pr.id_prac,
                         'db_id': pr.db_id,
+                        'db_name': pr.db_name,
                         'status': pr.status,
                         'plstatus': pr.plstatus
                     }
