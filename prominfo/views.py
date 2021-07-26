@@ -84,14 +84,7 @@ def prominfoc_oddo(request, data_od, data_do):
 @ csrf_exempt
 @ api_view(['GET', 'PUT', 'POST', 'DELETE'])
 def prominfo_update(request=None, numerprom=None):
-    if numerprom == None:
 
-        promcenterror = {
-            'wiadomosc': "Nie moge pobrać danych",
-            'promcentinfo': "[]",
-            'error': "błąd parametru"
-        }
-        return JsonResponse(promcenterror, status=status.HTTP_400_BAD_REQUEST)
     if request.method == 'POST':
         # try:
         promcent_data = JSONParser().parse(request)
@@ -125,6 +118,13 @@ def prominfo_update(request=None, numerprom=None):
 
     else:
         if (request.method == 'GET'):
+            if numerprom == None:
+                promcenterror = {
+                    'wiadomosc': "Nie moge pobrać danych",
+                    'promcentinfo': "[]",
+                    'error': "błąd parametru"
+                }
+                return JsonResponse(promcenterror, status=status.HTTP_400_BAD_REQUEST)
             try:
                 promuwagi = Nag_rach.objects.using(
                     'centrala').select_related('NagRach').get(NagRach__nr_prom=numerprom)
