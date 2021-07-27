@@ -86,34 +86,34 @@ def prominfoc_oddo(request, data_od, data_do):
 def prominfo_update(request=None, numerprom=None):
 
     if request.method == 'POST':
-        # try:
-        promcent_data = JSONParser().parse(request)
-        print('promcent_data:', promcent_data)
-        promcent_serializer = PromCentInfoOnlySerializer(
-            data=promcent_data)
+        try:
+            promcent_data = JSONParser().parse(request)
+            print('promcent_data:', promcent_data)
+            promcent_serializer = PromCentInfoOnlySerializer(
+                data=promcent_data)
 
-        if promcent_serializer.is_valid():
-            promcent_serializer.save()
-            print(promcent_serializer.data)
-            odpowiedz = {
-                'wiadomosc': "Sukces - wpisano informacje",
-                'promcentinfo': [promcent_serializer.data],
-                'error': ""
+            if promcent_serializer.is_valid():
+                promcent_serializer.save()
+                print(promcent_serializer.data)
+                odpowiedz = {
+                    'wiadomosc': "Sukces - wpisano informacje",
+                    'promcentinfo': [promcent_serializer.data],
+                    'error': ""
+                }
+                return JsonResponse(odpowiedz, status=status.HTTP_201_CREATED)
+            else:
+                promcenterror = {
+                    'wiadomosc': "Nie moge wpisac danych",
+                    'promcentinfo': "[]",
+                    'error': promcent_serializer.errors
+                }
+                return JsonResponse(promcenterror, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            exceptionError = {
+                'wiadomosc': "Błąd w pobieraniu danych",
+                'promcentifo': "[]",
+                'error': "Wystąpił błąd"
             }
-            return JsonResponse(odpowiedz, status=status.HTTP_201_CREATED)
-        else:
-            promcenterror = {
-                'wiadomosc': "Nie moge wpisac danych",
-                'promcentinfo': "[]",
-                'error': promcent_serializer.errors
-            }
-            return JsonResponse(promcenterror, status=status.HTTP_400_BAD_REQUEST)
-        # except:
-        #     exceptionError = {
-        #         'wiadomosc': "Błąd w pobieraniu danych",
-        #         'promcentifo': "[]",
-        #         'error': "Wystąpił błąd"
-        #     }
         return JsonResponse(exceptionError, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     else:
